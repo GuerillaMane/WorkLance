@@ -24,3 +24,27 @@ body {
     flex-direction: row;
     align-items: center
 }
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    padding: 1rem;
+    margin: 2rem auto;
+    max-width: 40rem;
+}
+
+.filter {
+    margin-right: 1rem;
+}
+
+.filter label, .filter input {
+    vertical-align: middle;
+}
+
+.filter label {
+    margin-left: 0.25rem;
+}
+
+.filter.active label {
+    font-weight: bold;
+}
