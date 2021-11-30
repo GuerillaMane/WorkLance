@@ -1,9 +1,9 @@
 <template>
-  <button v-if="isButton" :class="styleType">
+  <button class="button-base" v-if="!link" :class="styleType">
     <slot></slot>
   </button>
 
-  <router-link v-else :class="styleType" :to="to">
+  <router-link class="button-base" v-else :class="styleType" :to="to">
     <slot></slot>
   </router-link>
 </template>
@@ -22,7 +22,7 @@ export default {
     link: {
       type: Boolean,
       required: false,
-      default: true
+      default: false
     },
 
     to: {
@@ -44,7 +44,7 @@ button, a {
   color: black;
   cursor: pointer;
   border-radius: 30px;
-  margin-right: 0.5rem;
+  /*margin-right: 0.5rem;*/
 }
 
 .flat {

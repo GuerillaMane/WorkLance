@@ -7,6 +7,7 @@
     <base-card>
       <div class="controls">
         <base-button>Refresh</base-button>
+        <base-button v-if="!isDeveloper" link :to="{name: 'Registration'}">Register New Dev</base-button>
       </div>
 
       <ul v-if="isDevelopers">
@@ -21,11 +22,12 @@
 <script>
 import DeveloperFilter from "./DeveloperFilter";
 import DeveloperItem from "./DeveloperItem";
+import BaseButton from "../UI/BaseButton";
 
 export default {
   name: "DevelopersList",
 
-  components: {DeveloperFilter, DeveloperItem},
+  components: {BaseButton, DeveloperFilter, DeveloperItem},
 
   data() {
     return {
@@ -39,6 +41,10 @@ export default {
       return devs.filter(dev => {
         return this.activeFilters.some(key => dev.areas.includes(key))
       });
+    },
+
+    isDeveloper() {
+      return this.$store.getters['devs/isDeveloper'];
     },
 
     isDevelopers() {

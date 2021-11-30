@@ -43,9 +43,4 @@ h3 {
 h3, h4, div {
   margin: 0.5rem 0;
 }
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-}
 </style>

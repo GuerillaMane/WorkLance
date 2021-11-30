@@ -12,6 +12,8 @@
 export default {
   name: "DeveloperFilter",
 
+  emits: ['update-filter'],
+
   data() {
     return {
       filters: {}

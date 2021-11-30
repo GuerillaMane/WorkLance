@@ -1,3 +1,5 @@
+import {createUID} from "../helpers";
+
 export default {
   namespaced: true,
 
@@ -37,10 +39,25 @@ export default {
 
     getAreas(state) {
       return state.areas;
+    },
+
+    isDeveloper(state, getters, rootState, rootGetters) {
+      const devs = getters.getDevelopers;
+      const userId = rootGetters.getUserId;
+      return devs.some(dev => dev.id === userId);
     }
   },
 
-  mutations: {},
+  mutations: {
+    setDeveloper(state, payload) {
+      state.developers.push(payload);
+    }
+  },
 
-  actions: {}
+  actions: {
+    setDeveloper(context, data) {
+      data.id = createUID();
+      context.commit('setDeveloper', data);
+    }
+  }
 };
