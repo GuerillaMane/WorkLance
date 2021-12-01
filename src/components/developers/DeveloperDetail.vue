@@ -17,7 +17,7 @@
     <base-card>
       <header>
         <h2>Are you interested? Reach out now!</h2>
-        <base-button link :to="contactLink" styleType="outline">Contact!</base-button>
+        <base-button v-if="!isContactForm" link :to="contactLink" styleType="outline">Contact!</base-button>
       </header>
       <router-view></router-view>
     </base-card>
@@ -43,6 +43,10 @@ export default {
 
     contactLink() {
       return this.$route.path + '/contact';
+    },
+
+    isContactForm() {
+      return this.$route.path === '/devs/c1/contact';
     }
   },
 

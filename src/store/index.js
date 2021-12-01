@@ -1,15 +1,17 @@
 import {createStore} from "vuex";
 
 import devsModule from "./devsModule";
+import messagesModule from "./messagesModule";
 
 const store = createStore({
   modules: {
-    devs: devsModule
+    devs: devsModule,
+    messages: messagesModule
   },
 
   state() {
     return {
-      userId: '123'
+      userId: 'c1'
     };
   },
 
