@@ -22,12 +22,11 @@
 <script>
 import DeveloperFilter from "./DeveloperFilter";
 import DeveloperItem from "./DeveloperItem";
-import BaseButton from "../UI/BaseButton";
 
 export default {
   name: "DevelopersList",
 
-  components: {BaseButton, DeveloperFilter, DeveloperItem},
+  components: {DeveloperFilter, DeveloperItem},
 
   data() {
     return {
