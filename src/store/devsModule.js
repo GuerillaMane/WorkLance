@@ -1,33 +1,11 @@
-import {createUID} from "../helpers";
+import axios from "../plugins/api";
 
 export default {
   namespaced: true,
 
   state() {
     return {
-      developers: [
-        {
-          id: 'c1',
-          firstname: 'Kevin',
-          lastname: 'Spacey',
-          areas: ['frontend', 'design'],
-          description:
-              "Hey :) I'm Kevin and I've worked as a freelance web developer for years. " +
-              "Let me help you with your project!!!",
-          rate: 30
-        },
-        {
-          id: 'c2',
-          firstname: 'Mia',
-          lastname: 'Wallace',
-          areas: ['backend', 'frontend'],
-          description:
-              'I am Mia and as a senior full-stack developer in a big tech company, ' +
-              'I can help you get your project done in a couple of days.',
-          rate: 30
-        }
-      ],
-
+      developers: [],
       areas: ['frontend', 'backend', 'design']
     };
   },
@@ -51,13 +29,38 @@ export default {
   mutations: {
     setDeveloper(state, payload) {
       state.developers.push(payload);
+    },
+
+    setDevelopers(state, payload) {
+      state.developers = payload;
     }
   },
 
   actions: {
     setDeveloper(context, data) {
-      data.id = createUID();
-      context.commit('setDeveloper', data);
+      const id = context.rootGetters.getUserId;
+
+      axios.put(`developers/${id}.json`, data)
+          .then(response => {
+            console.log(response);
+            data.id = id;
+            context.commit('setDeveloper', data);
+          }).catch(error => {
+            console.log(error);
+          })
+    },
+
+    async loadDevelopers(context) {
+      const developers = [];
+      const response = await axios.get('developers.json');
+
+      for (let id in response.data) {
+        let coach = response.data[id];
+        coach.id = id;
+        developers.push(coach);
+      }
+
+      context.commit('setDevelopers', developers);
     }
   }
 };

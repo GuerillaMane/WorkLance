@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="header">
     <nav>
       <div class="container-row">
         <img :src="require('../../../public/hard-work.png')" alt="WorkLance icon">
@@ -26,71 +26,72 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 header {
   width: 100%;
   height: 6rem;
-  background-color: #FEC8D8;
+  background-color: $base-bg;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
-}
 
-header img {
-  height: 3.5rem;
-  width: 3.5rem;
-}
+  nav {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-header a {
-  text-decoration: none;
-  color: black;
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border: 1px solid transparent;
-}
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-a:active, a:hover, a.router-link-active {
-  border-bottom: 1px solid black;
-}
+    li {
+      margin: 0 0.5rem;
+    }
+  }
 
-a:visited {
-  color: black;
-}
+  .container-row {
+    img {
+      height: 3.5rem;
+      width: 3.5rem;
+    }
 
-h2 {
-  margin: 0;
-}
+    h2 {
+      margin: 0;
 
-h2 a {
-  color: black;
-  margin: 0;
-}
+      a {
+        color: black;
+        margin: 0;
+      }
 
-h2 a:hover,
-h2 a:active,
-h2 a.router-link-active {
-  border-color: transparent;
-}
+      a:hover, a:active,
+      a.router-link-active {
+        border-color: transparent;
+      }
+    }
+  }
 
-header nav {
-  width: 90%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  a {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+  }
 
-header ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  a:active, a:hover, a.router-link-active {
+    border-bottom: 1px solid black;
+  }
 
-li {
-  margin: 0 0.5rem;
+  a:visited {
+    color: black;
+  }
 }
 </style>

@@ -18,7 +18,6 @@ const router = createRouter({
       path: '/devs/:id',
       name: 'Developer Detail',
       component: () => import('../components/developers/DeveloperDetail'),
-      props: true,
       children: [
         {
           path: 'contact',

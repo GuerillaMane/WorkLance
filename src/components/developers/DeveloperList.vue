@@ -6,11 +6,14 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button>Refresh</base-button>
-        <base-button v-if="!isDeveloper" link :to="{name: 'Registration'}">Register New Dev</base-button>
+        <base-button @click="loadDevs">Refresh</base-button>
+        <base-button v-if="!isDeveloper && !this.isLoading" link :to="{name: 'Registration'}">
+          Register as a Dev
+        </base-button>
       </div>
 
-      <ul v-if="isDevelopers">
+      <base-spinner v-if="isLoading"></base-spinner>
+      <ul v-else-if="isDevelopers">
         <developer-item v-for="dev in filteredDevelopers" :key="dev.id"
                         v-bind="dev"></developer-item>
       </ul>
@@ -31,6 +34,7 @@ export default {
   data() {
     return {
       activeFilters: [],
+      isLoading: false
     };
   },
 
@@ -51,7 +55,21 @@ export default {
     }
   },
 
+  created() {
+    this.loadDevs();
+  },
+
   methods: {
+    async loadDevs() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch('devs/loadDevelopers');
+      } catch (error) {
+        this.$notify({type: 'error', title: 'Error', text: 'Something went wrong!'});
+      }
+      this.isLoading = false;
+    },
+
     updateFilters(filters) {
       this.activeFilters = filters;
     }

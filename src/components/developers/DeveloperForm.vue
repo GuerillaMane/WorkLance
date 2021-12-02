@@ -117,7 +117,7 @@ export default {
         firstname: {required, alpha},
         lastname: {required, alpha},
         areas: {required: helpers.withMessage('You should choose at least one area', required)},
-        description: {required, alpha},
+        description: {required},
         rate: {required, minValue: minValue(1)}
       }
     };

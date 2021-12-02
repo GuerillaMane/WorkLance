@@ -46,7 +46,7 @@ export default {
     },
 
     isContactForm() {
-      return this.$route.path === '/devs/c1/contact';
+      return this.$route.name === 'Contact Developer';
     }
   },
 
@@ -56,12 +56,16 @@ export default {
 }
 </script>
 
-<style scoped>
-.card > * {
-  margin: 0.5rem;
-}
+<style lang="scss" scoped>
+.card {
+  * {
+    margin: 0.5rem;
+  }
 
-header * {
-  margin: 1rem 0.5rem;
+  header {
+    * {
+      margin: 1rem 0.5rem;
+    }
+  }
 }
 </style>

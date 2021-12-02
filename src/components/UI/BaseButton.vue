@@ -34,12 +34,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 button, a {
   text-decoration: none;
   padding: 0.5rem 1rem;
   font: inherit;
-  background-color: #FEC8D8;
+  background-color: $base-bg;
   border: 1px solid black;
   color: black;
   cursor: pointer;
@@ -53,17 +53,17 @@ button, a {
 }
 
 .flat:hover, .flat:active {
-  background-color: #FEC8D8;
+  background-color: $base-bg;
 }
 
 .outline {
-  background-color: #FEC8D8;
+  background-color: $base-bg;
   border: 1px solid black;
   color: black;
 }
 
 .outline:hover, .outline:active {
-  background-color: #F692BC;
+  background-color: $base-hover;
   border: 1px solid black;
 }
 </style>

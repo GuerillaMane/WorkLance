@@ -17,38 +17,38 @@ export default {
 }
 </script>
 
-<style scoped>
-a {
-  color: #F692BC;
-  text-decoration: none;
-}
-
-a:hover {
-  cursor: pointer;
-  color: #f379ac !important;
-}
-
-a:visited {
-  color: #F692BC;
-}
-
+<style lang="scss" scoped>
 .page-404 {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
 
-.page-404 > *:not(:first-child):not(:last-child) {
-  margin-bottom: 15px;
-}
+  *:not(:first-child):not(:last-child) {
+    margin-bottom: 15px;
+  }
 
-.gif-404 {
-  background-repeat: no-repeat;
-  background-image: url('../../public/404.gif');
-  width: 80%;
-  height: 400px;
-  margin-top: 50px;
-  background-position: center;
+  .gif-404 {
+    background-repeat: no-repeat;
+    background-image: url('../../public/404.gif');
+    width: 80%;
+    height: 400px;
+    margin-top: 50px;
+    background-position: center;
+  }
+
+  a {
+    color: $base-hover;
+    text-decoration: none;
+  }
+
+  a:hover {
+    cursor: pointer;
+    color: $base-border !important;
+  }
+
+  a:visited {
+    color: $base-hover;
+  }
 }
 </style>

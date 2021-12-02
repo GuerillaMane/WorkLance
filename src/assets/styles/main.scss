@@ -1,0 +1,175 @@
+@import 'notifications.scss';
+@import 'variables.scss';
+
+@font-face {
+  font-family: 'DaxlinePro-Regular';
+  src: local('DaxlinePro-Regular');
+  src: url('../fonts/DaxlinePro-Regular.ttf') format('truetype');
+  src: url('../fonts/DaxlinePro-Regular.eot');
+  src: url('../fonts/DaxlinePro-Regular.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/DaxlinePro-Regular.woff2') format('woff2'),
+  url('../fonts/DaxlinePro-Regular.woff') format('woff'),
+  url('../fonts/DaxlinePro-Regular.otf') format('opentype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  font-family: 'DaxlinePro-Regular', 'sans-serif';
+}
+
+body {
+  height: 100%;
+}
+
+.container-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.container-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  margin: 2rem auto;
+  max-width: 40rem;
+}
+
+.error-message {
+  font-size: 14px;
+  color: red;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+
+  .button-base:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+.filter {
+  margin-right: 1rem;
+
+  label, input {
+    vertical-align: middle;
+  }
+
+  label {
+    margin-left: 0.25rem;
+  }
+
+  .active label {
+    font-weight: bold;
+  }
+}
+
+.form-control {
+  margin: 0.5rem 0;
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  input, textarea {
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    font: inherit;
+  }
+
+  textarea {
+    outline: none !important;
+    resize: vertical;
+  }
+
+  input:focus, textarea:focus {
+    background-color: #fcf1f1;
+    outline: none;
+    border-color: $base-border;
+  }
+
+  .form-checkbox {
+    input[type='checkbox'] + label {
+      display: inline;
+      font-weight: normal;
+    }
+
+    input[type='checkbox'] {
+      display: inline;
+      width: auto;
+      border: none;
+      margin-right: 0.5rem;
+    }
+
+    input[type='checkbox']:focus {
+      outline: $base-border;
+    }
+
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  .error-container {
+    height: 18px;
+  }
+
+  .form-submit {
+    margin-top: 0.5rem;
+  }
+}
+
+
+.invalid {
+  /* also need -webkit-animation and -moz-animation */
+  animation: shake .5s linear;
+
+  label, h3 {
+    color: red;
+  }
+
+  input, textarea {
+    border: 1px solid red;
+  }
+}
+
+/* also need -webkit-keyframes and -moz-keyframes */
+@keyframes shake {
+  8%, 41% {
+    transform: translateX(-10px);
+  }
+  25%, 58% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  92% {
+    transform: translateX(5px);
+  }
+  0%, 100% {
+    transform: translateX(0);
+  }
+}
