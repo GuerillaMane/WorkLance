@@ -1,4 +1,6 @@
+import { notify } from "@kyvg/vue3-notification";
 import axios from "../plugins/api";
+import router from "../router";
 
 export default {
   namespaced: true,
@@ -6,7 +8,8 @@ export default {
   state() {
     return {
       developers: [],
-      areas: ['frontend', 'backend', 'design']
+      areas: ['frontend', 'backend', 'design'],
+      loadingStatus: false,
     };
   },
 
@@ -17,6 +20,10 @@ export default {
 
     getAreas(state) {
       return state.areas;
+    },
+
+    getLoadingStatus(state) {
+      return state.loadingStatus;
     },
 
     isDeveloper(state, getters, rootState, rootGetters) {
@@ -33,6 +40,10 @@ export default {
 
     setDevelopers(state, payload) {
       state.developers = payload;
+    },
+
+    setLoadingStatus(state, status) {
+      state.loadingStatus = status;
     }
   },
 
@@ -40,13 +51,22 @@ export default {
     setDeveloper(context, data) {
       const id = context.rootGetters.getUserId;
 
+      context.commit('setLoadingStatus', true);
       axios.put(`developers/${id}.json`, data)
-          .then(response => {
-            console.log(response);
+          .then(() => {
             data.id = id;
             context.commit('setDeveloper', data);
-          }).catch(error => {
-            console.log(error);
+            router.replace({name: 'Developers'});
+          })
+          .catch(() => {
+            notify({
+              type: 'error',
+              title: 'Error',
+              text: 'Failed to register! Try again later.',
+            });
+          })
+          .then(() => {
+            context.commit('setLoadingStatus', false);
           })
     },
 

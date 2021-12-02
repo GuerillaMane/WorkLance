@@ -47,12 +47,17 @@ button, a {
   /*margin-right: 0.5rem;*/
 }
 
+button:disabled {
+  background-color: gray;
+  cursor: wait;
+}
+
 .flat {
   background-color: transparent;
   color: black;
 }
 
-.flat:hover, .flat:active {
+.flat:hover:not([disabled]), .flat:active {
   background-color: $base-bg;
 }
 
@@ -62,7 +67,7 @@ button, a {
   color: black;
 }
 
-.outline:hover, .outline:active {
+.outline:hover:not([disabled]), .outline:active {
   background-color: $base-hover;
   border: 1px solid black;
 }

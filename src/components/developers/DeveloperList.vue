@@ -65,7 +65,10 @@ export default {
       try {
         await this.$store.dispatch('devs/loadDevelopers');
       } catch (error) {
-        this.$notify({type: 'error', title: 'Error', text: 'Something went wrong!'});
+        this.$notify({
+          type: 'error', title: 'Error',
+          text: "Something went wrong! We can't find any developer :("
+        });
       }
       this.isLoading = false;
     },
@@ -77,7 +80,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 ul {
   list-style: none;
   margin: 0;

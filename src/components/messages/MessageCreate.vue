@@ -10,16 +10,19 @@
       <textarea id="message" rows="4" v-model="message"></textarea>
     </div>
 
+    <progress-bar v-if="loadingStatus"></progress-bar>
+
     <div class="actions">
-      <base-button>Send Message</base-button>
+      <base-button :disabled="loadingStatus">Send Message</base-button>
     </div>
   </form>
 </template>
 
 <script>
+import ProgressBar from "../UI/ProgressBar";
 export default {
   name: "MessageCreate",
-
+  components: {ProgressBar},
   data() {
     return {
       email: '',
@@ -31,13 +34,15 @@ export default {
   computed: {
     devId() {
       return this.$route.params.id;
+    },
+
+    loadingStatus() {
+      return this.$store.getters['messages/getLoadingStatus'];
     }
   },
 
   methods: {
     sendMessage() {
-      this.isFormValid = true;
-
       if (this.validateForm()) {
         const requestData = {
           devId: this.devId,
@@ -46,13 +51,15 @@ export default {
         };
 
         this.$store.dispatch('messages/addMessage', requestData);
-        this.$router.replace({name: 'Developers'});
       }
     },
 
     validateForm() {
       if (!this.email || !this.message) {
-        this.isFormValid = false;
+        this.$notify({
+          type: 'warn', title: 'Warning',
+          text: 'Try to enter some data in contact form first!'
+        });
         return false;
       }
       return true;

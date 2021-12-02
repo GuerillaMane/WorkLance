@@ -11,7 +11,7 @@ const store = createStore({
 
   state() {
     return {
-      userId: 'd34b-eb0d',
+      userId: 'u34w-eb1d',
     };
   },
 

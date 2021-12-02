@@ -9,6 +9,7 @@ import BaseButton from "./components/UI/BaseButton";
 import BaseChip from "./components/UI/BaseChip";
 import BaseSpinner from "./components/UI/BaseSpinner";
 import BaseAlert from "./components/UI/BaseAlert";
+import ProgressBar from "./components/UI/ProgressBar";
 
 import router from "./router";
 import store from "./store";
@@ -27,5 +28,6 @@ app.component('base-button', BaseButton);
 app.component('base-chip', BaseChip);
 app.component('base-spinner', BaseSpinner);
 app.component('base-alert', BaseAlert);
+app.component('progress-bar', ProgressBar);
 
 app.mount('#app');

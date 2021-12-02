@@ -78,7 +78,10 @@
       </div>
     </div>
 
-    <base-button class="form-submit">Register</base-button>
+    <div class="container-row">
+      <base-button :disabled="loadingStatus" class="form-submit">Register</base-button>
+      <progress-bar v-if="loadingStatus"></progress-bar>
+    </div>
   </form>
 </template>
 
@@ -126,6 +129,10 @@ export default {
   computed: {
     areas() {
       return this.$store.getters['devs/getAreas'];
+    },
+
+    loadingStatus() {
+      return this.$store.getters['devs/getLoadingStatus'];
     }
   },
 
@@ -135,7 +142,6 @@ export default {
 
       if (!this.v$.newDeveloper.$invalid) {
         this.$emit('save-data', this.newDeveloper);
-        this.$router.replace({name: 'Developers'});
       } else {
         // here we should replay animation on touch!
         console.log('invalid');
@@ -145,7 +151,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 h3 {
   margin: 0.5rem 0;
   font-size: 1rem;
