@@ -2,8 +2,14 @@
   <div v-if="selectedDev">
     <section>
       <base-card>
-        <h2>{{ fullname }}</h2>
-        <h3>${{ selectedDev.rate }}/hour</h3>
+        <base-spinner v-if="loadingStatus"></base-spinner>
+        <div class="dev-info" v-else>
+          <img :src="selectedDev.photo" alt="dev-photo" />
+          <div>
+            <h2>{{ fullname }}</h2>
+            <h3>${{ selectedDev.rate }}/hour</h3>
+          </div>
+        </div>
       </base-card>
     </section>
 
@@ -35,6 +41,7 @@ export default {
   data() {
     return {
       selectedDev: null,
+      loadingStatus: false
     };
   },
 
@@ -60,13 +67,28 @@ export default {
     selectDev() {
       let devs = this.$store.getters['devs/getDevelopers'];
       if (!devs.length) {
-        this.$notify({
-          type: 'error', title: 'Error',
-          text: "Something went wrong!"
-        });
-        this.$router.replace({name: 'Developers'});
+        this.getDeveloperFromFB();
       }
       this.selectedDev = devs.find(dev => dev.id === this.id);
+    },
+
+    getDeveloperFromFB() {
+      this.loadingStatus = true;
+      this.axios.get(`developers/${this.id}.json`)
+          .then(response => {
+            this.selectedDev = response.data;
+            console.log('hello');
+          })
+          .catch(() => {
+            this.$notify({
+              type: 'error', title: 'Error',
+              text: "Something went wrong!"
+            });
+            this.$router.replace({name: 'Developers'});
+          })
+          .then(() => {
+            this.loadingStatus = false;
+          });
     }
   }
 }
@@ -76,6 +98,16 @@ export default {
 .card {
   * {
     margin: 0.5rem;
+  }
+
+  .dev-info {
+    display: flex;
+    flex-direction: row;
+
+    img {
+      border-radius: 20%;
+      width: 23%;
+    }
   }
 
   header {

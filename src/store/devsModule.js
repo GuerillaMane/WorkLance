@@ -71,16 +71,23 @@ export default {
     },
 
     async loadDevelopers(context) {
-      const developers = [];
       const response = await axios.get('developers.json');
 
-      for (let id in response.data) {
-        let coach = response.data[id];
-        coach.id = id;
-        developers.push(coach);
+      if (response.data) {
+        let developers = [];
+        for (let id in response.data) {
+          let coach = response.data[id];
+          coach.id = id;
+          developers.push(coach);
+        }
+        context.commit('setDevelopers', developers);
+      } else {
+        notify({
+          type: 'warn',
+          title: 'Warning',
+          text: 'No devs were found!',
+        });
       }
-
-      context.commit('setDevelopers', developers);
     }
   }
 };

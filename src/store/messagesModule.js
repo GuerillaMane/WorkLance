@@ -17,8 +17,9 @@ export default {
       return state.messages;
     },
 
-    getUserMessages(state, getters, rootState, rootGetters) {
-      return state.messages.filter(message => message.developerId === rootGetters.getUserId);
+    getUserMessages(state) {
+      return state.messages;
+      // return state.messages.filter(message => message.developerId === rootGetters.getUserId);
     },
 
     getLoadingStatus(state) {
@@ -31,12 +32,37 @@ export default {
       state.messages.push(payload);
     },
 
+    addMessages(state, payload) {
+      state.messages = payload;
+    },
+
     setLoadingStatus(state, status) {
       state.loadingStatus = status;
     }
   },
 
   actions: {
+    async getMessages(context) {
+      const currentDev = context.rootGetters.getUserId;
+      const response = await axios.get(`messages/${currentDev}.json`);
+
+      if (response.data) {
+        let messages = [];
+        for (let id in response.data) {
+          let message = response.data[id];
+          message.id = id;
+          messages.push(message);
+        }
+        context.commit('addMessages', messages);
+      } else {
+        notify({
+          type: 'warn',
+          title: 'Warning',
+          text: 'You have no messages! :(',
+        });
+      }
+    },
+
     addMessage(context, payload) {
       const newMessage = {
         date: new Date().toString(),
@@ -47,10 +73,14 @@ export default {
       context.commit('setLoadingStatus', true);
       axios.post(`/messages/${payload.devId}.json`, newMessage)
           .then(response => {
-            console.log(response);
             newMessage.id = response.data.name;
             newMessage.developerId = payload.devId;
             router.replace({name: 'Developers'});
+            notify({
+              type: 'info',
+              title: 'Yay!',
+              text: 'The message was sent successfully!',
+            });
           })
           .catch(() => {
             notify({
@@ -61,7 +91,7 @@ export default {
           })
           .then(() => {
             context.commit('setLoadingStatus', false);
-          })
+          });
 
       context.commit('addMessage', newMessage);
     }

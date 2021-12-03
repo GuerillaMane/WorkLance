@@ -1,5 +1,14 @@
 <template>
   <form @submit.prevent="submitForm">
+    <div class="form-image">
+      <input type="file" ref="photoInput" @change="previewImage" accept="image/*"/>
+      <div class="container-img" :style="[photoURL ? 'border-radius: 20%; border: none' : '']">
+        <img v-if="photoURL" :src="photoURL" alt="dev-photo"/>
+        <div v-else>no file chosen</div>
+      </div>
+      <base-button styleType="flat" @click.prevent="choosePhoto">{{ loadImgButtonName }}</base-button>
+    </div>
+
     <div class="form-control" :class="{invalid: v$.newDeveloper.firstname.$invalid}">
       <label for="firstname">Firstname</label>
       <input type="text" id="firstname"
@@ -110,7 +119,10 @@ export default {
         areas: [],
         description: null,
         rate: null
-      }
+      },
+
+      photo: null,
+      photoURL: null
     };
   },
 
@@ -131,6 +143,10 @@ export default {
       return this.$store.getters['devs/getAreas'];
     },
 
+    loadImgButtonName() {
+      return this.photoURL ? 'Change photo' : 'Load photo';
+    },
+
     loadingStatus() {
       return this.$store.getters['devs/getLoadingStatus'];
     }
@@ -146,7 +162,16 @@ export default {
         // here we should replay animation on touch!
         console.log('invalid');
       }
-    }
+    },
+
+    choosePhoto() {
+      this.$refs.photoInput.click();
+    },
+
+    previewImage(event) {
+      this.photo = event.target.files[0];
+      this.photoURL = URL.createObjectURL(this.photo);
+    },
   }
 }
 </script>
@@ -155,5 +180,9 @@ export default {
 h3 {
   margin: 0.5rem 0;
   font-size: 1rem;
+}
+
+.container-row {
+  justify-content: center;
 }
 </style>

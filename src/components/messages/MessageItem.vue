@@ -33,42 +33,43 @@ export default {
 }
 </script>
 
-<style scoped>
-.container-row {
-  justify-content: space-between;
-}
-
+<style lang="scss" scoped>
 li {
   margin: 1rem 0;
   border: 1px solid #ccc;
+  border-radius: 15px;
   padding: 1rem;
-}
 
-a {
-  color: #3d008d;
-  text-decoration: none;
-  font-weight: bold;
-}
+  .container-row {
+    justify-content: space-between;
 
-a:hover,
-a:active {
-  color: #8d007a;
-}
+    p {
+      color: #404040;
+    }
 
-.date {
-  text-align: center;
-  margin-bottom: 0.75rem;
-  color: #404040;
-  border: 1px solid #404040;
-  border-radius: 20px;
-  width: 125px
-}
+    a {
+      color: #3d008d;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-.container-row > p {
-  color: #404040;
-}
+    a:hover,
+    a:active {
+      color: #8d007a;
+    }
+  }
 
-.message {
-  margin: 1rem 0 0 0;
+  .date {
+    text-align: center;
+    margin-bottom: 0.75rem;
+    color: #404040;
+    border: 1px solid #404040;
+    border-radius: 20px;
+    width: 125px
+  }
+
+  .message {
+    margin: 1rem 0 0 0;
+  }
 }
 </style>

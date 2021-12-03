@@ -63,12 +63,7 @@ export default {
 }
 </script>
 
-<style scoped>
-h2, h3 {
-  font-weight: normal;
-  text-align: center;
-}
-
+<style lang="scss" scoped>
 dialog {
   margin: 0;
   border-radius: 15px;
@@ -79,6 +74,11 @@ dialog {
   top: 5vh;
   background-color: #f87e7e;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+  h2, h3 {
+    font-weight: normal;
+    text-align: center;
+  }
 }
 
 .alert-enter-active {

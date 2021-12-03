@@ -68,13 +68,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 form {
   margin: 2rem 1rem 1rem !important;
-}
 
-.actions {
-  padding-top: 0.5rem;
-  justify-content: center;
+  .actions {
+    padding-top: 0.5rem;
+    justify-content: center;
+  }
 }
 </style>
