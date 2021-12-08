@@ -6,7 +6,13 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      redirect: {name: 'Developers'}
+      redirect: {name: 'Login'}
+    },
+
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../views/Login')
     },
 
     {
@@ -31,7 +37,7 @@ const router = createRouter({
     {
       path: '/register',
       name: 'Registration',
-      component: () => import('../views/Registration')
+      component: () => import('../views/DeveloperRegistration')
     },
 
     {

@@ -77,7 +77,6 @@ export default {
       this.axios.get(`developers/${this.id}.json`)
           .then(response => {
             this.selectedDev = response.data;
-            console.log('hello');
           })
           .catch(() => {
             this.$notify({

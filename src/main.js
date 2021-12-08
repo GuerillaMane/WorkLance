@@ -1,5 +1,6 @@
 import {createApp} from "vue";
 import Notifications from "@kyvg/vue3-notification";
+import FontAwesomeIcon from "./plugins/fontawesome-icons";
 
 import './assets/styles/main.scss';
 
@@ -22,6 +23,8 @@ app.config.globalProperties.axios = axios;
 app.use(Notifications);
 app.use(router);
 app.use(store);
+
+app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.component('base-card', BaseCard);
 app.component('base-button', BaseButton);

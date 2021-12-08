@@ -1,5 +1,6 @@
 <template>
   <header class="header">
+<!--    :style="[isLogin ? 'display: none' : '']"-->
     <nav>
       <div class="container-row">
         <img :src="require('../../../public/hard-work.png')" alt="WorkLance icon">
@@ -12,8 +13,11 @@
         <li>
           <router-link :to="{name: 'Developers'}">See the Developers</router-link>
         </li>
-        <li>
+        <li v-if="isLogged">
           <router-link :to="{name: 'Messages'}">Your Messages</router-link>
+        </li>
+        <li v-else>
+          <router-link :to="{name: 'Login'}">Login</router-link>
         </li>
       </ul>
     </nav>
@@ -22,7 +26,13 @@
 
 <script>
 export default {
-  name: "TheHeader"
+  name: "TheHeader",
+
+  computed: {
+    isLogged() {
+      return false;
+    }
+  }
 }
 </script>
 

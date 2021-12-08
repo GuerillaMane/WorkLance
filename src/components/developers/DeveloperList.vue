@@ -1,25 +1,27 @@
 <template>
-  <section>
-    <developer-filter @update-filter="updateFilters"></developer-filter>
-  </section>
+  <div>
+    <section>
+      <developer-filter @update-filter="updateFilters"></developer-filter>
+    </section>
 
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button @click="loadDevs">Refresh</base-button>
-        <base-button v-if="!isDeveloper && !this.isLoading" link :to="{name: 'Registration'}">
-          Register as a Dev
-        </base-button>
-      </div>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button @click="loadDevs(true)">Refresh</base-button>
+          <base-button v-if="!isDeveloper && !this.isLoading" link :to="{name: 'Registration'}">
+            Register as a Dev
+          </base-button>
+        </div>
 
-      <base-spinner v-if="isLoading"></base-spinner>
-      <ul v-else-if="isDevelopers">
-        <developer-item v-for="dev in filteredDevelopers" :key="dev.id"
-                        v-bind="dev"></developer-item>
-      </ul>
-      <h4 v-else>No devs found...</h4>
-    </base-card>
-  </section>
+        <base-spinner v-if="isLoading"></base-spinner>
+        <ul v-else-if="isDevelopers">
+          <developer-item v-for="dev in filteredDevelopers" :key="dev.id"
+                          v-bind="dev"></developer-item>
+        </ul>
+        <h4 v-else>No devs found...</h4>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -60,10 +62,10 @@ export default {
   },
 
   methods: {
-    async loadDevs() {
+    async loadDevs(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch('devs/loadDevelopers');
+        await this.$store.dispatch('devs/loadDevelopers', {forceRefresh: refresh});
       } catch (error) {
         this.$notify({
           type: 'error', title: 'Error',

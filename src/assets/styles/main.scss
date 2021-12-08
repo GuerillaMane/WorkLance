@@ -124,7 +124,7 @@ body {
   }
 
   input:focus, textarea:focus {
-    background-color: #fcf1f1;
+    background-color: $base-input-bg;
     outline: none;
     border-color: $base-border;
   }

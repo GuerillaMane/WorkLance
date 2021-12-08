@@ -160,7 +160,10 @@ export default {
         this.$emit('save-data', this.newDeveloper);
       } else {
         // here we should replay animation on touch!
-        console.log('invalid');
+        this.$notify({
+          type: 'error', title: 'Error',
+          text: "You should fill all required fields!"
+        });
       }
     },
 
