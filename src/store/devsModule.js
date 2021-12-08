@@ -64,9 +64,10 @@ export default {
   actions: {
     setDeveloper(context, data) {
       const id = context.rootGetters.getUserId;
+      const token = context.rootGetters.getToken;
 
       context.commit('setLoadingStatus', true);
-      axios.put(`developers/${id}.json`, data)
+      axios.put(`developers/${id}.json?auth=${token}`, data)
           .then(() => {
             data.id = id;
             context.commit('setDeveloper', data);

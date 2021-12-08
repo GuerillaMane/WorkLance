@@ -1,9 +1,9 @@
 import {createStore} from "vuex";
 import axios from "../plugins/api";
+import router from "../router";
 
 import devsModule from "./devsModule";
 import messagesModule from "./messagesModule";
-// import {notify} from "@kyvg/vue3-notification";
 
 const store = createStore({
   modules: {
@@ -22,6 +22,10 @@ const store = createStore({
   getters: {
     getUserId(state) {
       return state.userId;
+    },
+
+    getToken(state) {
+      return state.token;
     }
   },
 
@@ -34,8 +38,23 @@ const store = createStore({
   },
 
   actions: {
-    // login(context, payload) {
-    // },
+    async login(context, payload) {
+      const requestData = payload;
+      requestData.returnSecureToken = true;
+      const response = await axios.post(
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_GOOGLE_IDENTITY_API}`,
+          requestData
+      );
+
+      if (response.data) {
+        context.commit('setUser', {
+          userId: response.data.localId,
+          token: response.data.idToken,
+          tokenExpiration: response.data.expiresIn
+        });
+        router.replace({name: 'Developers'});
+      }
+    },
 
     async signup(context, payload) {
       const requestData = payload;
@@ -51,7 +70,17 @@ const store = createStore({
           token: response.data.idToken,
           tokenExpiration: response.data.expiresIn
         });
+        router.replace({name: 'Developers'});
       }
+    },
+
+    logout({commit}) {
+      commit('setUser', {
+        userId: null,
+        token: null,
+        tokenExpiration: null
+      });
+      router.replace({name: 'Login'});
     }
   }
 });

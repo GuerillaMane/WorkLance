@@ -44,7 +44,9 @@ export default {
   actions: {
     async getMessages(context) {
       const currentDev = context.rootGetters.getUserId;
-      const response = await axios.get(`messages/${currentDev}.json`);
+      const token = context.rootGetters.getToken;
+
+      const response = await axios.get(`messages/${currentDev}.json?auth=${token}`);
 
       if (response.data) {
         let messages = [];

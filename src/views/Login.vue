@@ -5,6 +5,10 @@
       <h2>WorkLance</h2>
     </header>
 
+    <base-alert fixed :show="loadingStatus" title="Authenticating...">
+      <base-spinner></base-spinner>
+    </base-alert>
+
     <form @submit.prevent="login">
       <div class="form-control" :class="{invalid: v$.loginData.email.$invalid}">
         <label for="email">E-mail</label>
@@ -69,7 +73,9 @@ export default {
         password: null
       },
 
-      typePassword: 'password'
+      typePassword: 'password',
+
+      loadingStatus: false
     };
   },
 
@@ -83,19 +89,26 @@ export default {
   },
 
   methods: {
-    // login() {
-    //   if (!this.v$.loginData.$invalid) {
-    //     return true;
-    //   } else {
-    //     this.$notify({
-    //       type: 'warn', title: 'Warning',
-    //       text: 'Please enter a valid email and password!'
-    //     });
-    //   }
-    // },
+    login() {
+      if (this.isFormValid()) {
+        this.loadingStatus = true;
+        this.$store.dispatch('login', this.loginData)
+            .catch(() => {
+              this.$notify({
+                type: 'error',
+                title: 'Error',
+                text: 'Failed to authenticate!',
+              });
+            })
+            .then(() => {
+              this.loadingStatus = false;
+            });
+      }
+    },
 
     signup() {
       if (this.isFormValid()) {
+        this.loadingStatus = true;
         this.$store.dispatch('signup', this.loginData)
             .catch(error => {
               if (error.response.data.error.message === 'EMAIL_EXISTS') {
@@ -111,7 +124,10 @@ export default {
                   text: 'Failed to authenticate!',
                 });
               }
-            });
+            })
+            .then(() => {
+              this.loadingStatus = false;
+            })
       }
     },
 

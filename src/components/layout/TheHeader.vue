@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-<!--    :style="[isLogin ? 'display: none' : '']"-->
+    <!--:style="[isLogin ? 'display: none' : '']"-->
     <nav>
       <div class="container-row">
         <img :src="require('../../../public/hard-work.png')" alt="WorkLance icon">
@@ -13,9 +13,14 @@
         <li>
           <router-link :to="{name: 'Developers'}">See the Developers</router-link>
         </li>
-        <li v-if="isLogged">
-          <router-link :to="{name: 'Messages'}">Your Messages</router-link>
-        </li>
+        <template v-if="isLogged">
+          <li>
+            <router-link :to="{name: 'Messages'}">Your Messages</router-link>
+          </li>
+          <li>
+            <logout-link></logout-link>
+          </li>
+        </template>
         <li v-else>
           <router-link :to="{name: 'Login'}">Login</router-link>
         </li>
@@ -25,12 +30,16 @@
 </template>
 
 <script>
+import LogoutLink from "./LogoutLink";
+
 export default {
   name: "TheHeader",
 
+  components: {LogoutLink},
+
   computed: {
     isLogged() {
-      return false;
+      return !!this.$store.getters['getUserId'];
     }
   }
 }

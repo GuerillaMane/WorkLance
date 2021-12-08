@@ -28,30 +28,20 @@ export default {
     },
     alertMessage: {
       type: String,
-      required: true
+      required: false
     },
-    alertDuration: {
-      type: Number,
+    fixed: {
+      type: Boolean,
       required: false,
-      default: 5000
-    }
-  },
-
-  data() {
-    return {
-      timeoutId: null,
-    };
-  },
-
-  mounted() {
-    this.timeoutId = setTimeout(() => {
-      this.closeAlert();
-    }, this.alertDuration);
+      default: false,
+    },
   },
 
   methods: {
     closeAlert() {
-      clearTimeout(this.timeoutId);
+      if (this.fixed) {
+        return;
+      }
       this.$emit('close');
     }
   }
