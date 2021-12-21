@@ -1,4 +1,5 @@
 import {createRouter, createWebHistory} from "vue-router";
+import store from "../store";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -37,13 +38,15 @@ const router = createRouter({
     {
       path: '/register',
       name: 'Registration',
-      component: () => import('../views/DeveloperRegistration')
+      component: () => import('../views/DeveloperRegistration'),
+      meta: {requiresAuth: true}
     },
 
     {
       path: '/messages',
       name: 'Messages',
-      component: () => import('../components/messages/MessageList')
+      component: () => import('../components/messages/MessageList'),
+      meta: {requiresAuth: true}
     },
 
     {
@@ -52,6 +55,18 @@ const router = createRouter({
       component: () => import('../views/NotFound')
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  const isLogged = store.getters['getToken'];
+
+  if (to.name === 'Login' && isLogged) {
+    next(false);
+  } else if (to.meta.requiresAuth && !isLogged) {
+    next({name: 'Login'});
+  } else {
+    next();
+  }
 });
 
 export default router;

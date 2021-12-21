@@ -66,23 +66,31 @@ export default {
       const id = context.rootGetters.getUserId;
       const token = context.rootGetters.getToken;
 
-      context.commit('setLoadingStatus', true);
-      axios.put(`developers/${id}.json?auth=${token}`, data)
-          .then(() => {
-            data.id = id;
-            context.commit('setDeveloper', data);
-            router.replace({name: 'Developers'});
-          })
-          .catch(() => {
-            notify({
-              type: 'error',
-              title: 'Error',
-              text: 'Failed to register! Try again later.',
-            });
-          })
-          .then(() => {
-            context.commit('setLoadingStatus', false);
-          })
+      if (id && token) {
+        context.commit('setLoadingStatus', true);
+        axios.put(`developers/${id}.json?auth=${token}`, data)
+            .then(() => {
+              data.id = id;
+              context.commit('setDeveloper', data);
+              router.replace({name: 'Developers'});
+            })
+            .catch(() => {
+              notify({
+                type: 'error',
+                title: 'Error',
+                text: 'Failed to register! Try again later.',
+              });
+            })
+            .then(() => {
+              context.commit('setLoadingStatus', false);
+            })
+      } else {
+        notify({
+          type: 'warn',
+          title: 'Warning',
+          text: 'You should login first!',
+        });
+      }
     },
 
     async loadDevelopers(context, payload) {
