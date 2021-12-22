@@ -2,14 +2,14 @@ import axios from "../plugins/api";
 import {notify} from "@kyvg/vue3-notification";
 
 const setup = (store) => {
-  // TODO (maybe): add request interceptor to apply token on certain requests..
+  // TODO (maybe): add request interceptor to apply token on certain requests...
 
   /*  catching all [401 Unauthorized] responses;
      taking the first request, that responded  with 401, while pushing others to failedQueue;
-     trying to refresh token and apply new bearer, then return original request with new token;
+     trying to refresh token and apply new token, then return original request with new token;
      after that resolve all failedQueue requests;
 
-     if we get 401 on refreshToken request -> pushing user to login menu;
+     if we get 401 on refreshToken request -> push user to login;
   */
 
   let isRefreshing = false;
@@ -22,21 +22,18 @@ const setup = (store) => {
       } else {
         prom.resolve(token);
       }
-    })
-
+    });
     failedQueue = [];
-  }
-
+  };
 
   axios.interceptors.response.use(
       response => response,
       error => {
         const originalRequest = error.config;
 
-        // TODO: add rejected url (token refresh)
-        const rejectedUrl = '?';
+        const rejectedUrl = 'https://securetoken.googleapis.com/v1/token';
 
-        if (error.response.status === 401 && originalRequest.url === rejectedUrl) {
+        if (error.response.status === 401 && originalRequest.url.includes(rejectedUrl)) {
           notify({
             type: 'error',
             title: 'Error',
@@ -51,9 +48,7 @@ const setup = (store) => {
             return new Promise((resolve, reject) => {
               failedQueue.push({resolve, reject});
             }).then(token => {
-              // TODO: We are applying token as ?auth=${token} !!!
-              // -------------------------------------------------
-              // originalRequest.headers['Authorization'] = `Bearer ${token}`;
+              originalRequest.url += `?auth=${token}`;
               return axios(originalRequest);
             }).catch(error => {
               return Promise.reject(error);
@@ -69,10 +64,8 @@ const setup = (store) => {
             return new Promise((resolve, reject) => {
               store.dispatch('refreshToken')
                   .then(() => {
-                    // TODO: We are applying token as ?auth=${token} !!!
-                    // -------------------------------------------------
-                    // originalRequest.headers['Authorization'] = `Bearer ${updatedToken}`;
                     const updatedToken = store.getters['getToken'];
+                    originalRequest.url += `?auth=${updatedToken}`;
                     processQueue(null, updatedToken);
                     resolve(axios(originalRequest));
                   })

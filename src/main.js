@@ -15,10 +15,12 @@ import ProgressBar from "./components/UI/ProgressBar";
 import router from "./router";
 import store from "./store";
 import axios from "./plugins/api";
+import setupInterceptors from "./services/setupInterceptors";
 
 const app = createApp(App);
 
 app.config.globalProperties.axios = axios;
+setupInterceptors(store);
 
 app.use(Notifications);
 app.use(router);

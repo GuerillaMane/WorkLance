@@ -1,6 +1,6 @@
-import { notify } from "@kyvg/vue3-notification";
 import axios from "../plugins/api";
 import router from "../router";
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
   namespaced: true,

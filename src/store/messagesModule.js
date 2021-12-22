@@ -1,6 +1,6 @@
-import { notify } from "@kyvg/vue3-notification";
 import axios from "../plugins/api";
 import router from "../router";
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
   namespaced: true,
@@ -13,13 +13,8 @@ export default {
   },
 
   getters: {
-    getMessages(state) {
-      return state.messages;
-    },
-
     getUserMessages(state) {
       return state.messages;
-      // return state.messages.filter(message => message.developerId === rootGetters.getUserId);
     },
 
     getLoadingStatus(state) {
