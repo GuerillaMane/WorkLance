@@ -68,7 +68,7 @@ export default {
 
       if (id && token) {
         context.commit('setLoadingStatus', true);
-        axios.put(`developers/${id}.json?auth=${token}`, data)
+        axios.put(`developers/${id}.json`, data, {params: {auth: token}})
             .then(() => {
               data.id = id;
               context.commit('setDeveloper', data);

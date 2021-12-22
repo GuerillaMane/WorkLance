@@ -48,7 +48,7 @@ const setup = (store) => {
             return new Promise((resolve, reject) => {
               failedQueue.push({resolve, reject});
             }).then(token => {
-              originalRequest.url += `?auth=${token}`;
+              originalRequest.params.auth = token;
               return axios(originalRequest);
             }).catch(error => {
               return Promise.reject(error);
@@ -65,7 +65,7 @@ const setup = (store) => {
               store.dispatch('refreshToken')
                   .then(() => {
                     const updatedToken = store.getters['getToken'];
-                    originalRequest.url += `?auth=${updatedToken}`;
+                    originalRequest.params.auth = updatedToken;
                     processQueue(null, updatedToken);
                     resolve(axios(originalRequest));
                   })
