@@ -1,54 +1,56 @@
 <template>
-  <base-card>
-    <header>
-      <img :src="require('../../public/hard-work.png')" alt="WorkLance icon">
-      <h2>WorkLance</h2>
-    </header>
+  <div class="container">
+    <base-card>
+      <!-- <header>
+        <img :src="require('../../public/hard-work.png')" alt="WorkLance icon">
+        <h2>WorkLance</h2>
+      </header> -->
 
-    <base-alert fixed :show="loadingStatus" title="Authenticating...">
-      <base-spinner></base-spinner>
-    </base-alert>
+      <base-alert fixed :show="loadingStatus" title="Authenticating...">
+        <base-spinner></base-spinner>
+      </base-alert>
 
-    <form @submit.prevent="login">
-      <div class="form-control" :class="{invalid: v$.loginData.email.$invalid}">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" v-model.trim="loginData.email"
-               @blur="v$.loginData.email.$touch()"/>
+      <form @submit.prevent="login">
+        <div class="form-control" :class="{invalid: v$.loginData.email.$invalid}">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" v-model.trim="loginData.email"
+                @blur="v$.loginData.email.$touch()"/>
 
-        <div class="error-container">
-          <template v-if="v$.loginData.email.$dirty">
-            <div v-for="error of v$.loginData.email.$errors" :key="error.$message">
-              <div class="error-message">{{ error.$message }}</div>
-            </div>
-          </template>
-        </div>
-      </div>
-
-      <div class="form-control" :class="{invalid: v$.loginData.password.$invalid}">
-        <label for="password">Password</label>
-        <div class="form-control-password">
-          <input :type="typePassword" id="password" v-model="loginData.password"
-                 @blur="v$.loginData.password.$touch()"/>
-          <a @mousedown="showPassword" @mouseup="hidePassword">
-            <font-awesome-icon icon="eye"></font-awesome-icon>
-          </a>
+          <div class="error-container">
+            <template v-if="v$.loginData.email.$dirty">
+              <div v-for="error of v$.loginData.email.$errors" :key="error.$message">
+                <div class="error-message">{{ error.$message }}</div>
+              </div>
+            </template>
+          </div>
         </div>
 
-        <div class="error-container">
-          <template v-if="v$.loginData.password.$dirty">
-            <div v-for="error of v$.loginData.password.$errors" :key="error.$message">
-              <div class="error-message">{{ error.$message }}</div>
-            </div>
-          </template>
-        </div>
-      </div>
+        <div class="form-control" :class="{invalid: v$.loginData.password.$invalid}">
+          <label for="password">Password</label>
+          <div class="form-control-password">
+            <input :type="typePassword" id="password" v-model="loginData.password"
+                  @blur="v$.loginData.password.$touch()"/>
+            <a @mousedown="showPassword" @mouseup="hidePassword">
+              <font-awesome-icon icon="eye"></font-awesome-icon>
+            </a>
+          </div>
 
-      <div class="container-row">
-        <base-button>Login</base-button>
-        <base-button link style-type="flat" @click="signup">Signup</base-button>
-      </div>
-    </form>
-  </base-card>
+          <div class="error-container">
+            <template v-if="v$.loginData.password.$dirty">
+              <div v-for="error of v$.loginData.password.$errors" :key="error.$message">
+                <div class="error-message">{{ error.$message }}</div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="container-row">
+          <base-button>Login</base-button>
+          <base-button link style-type="flat" @click="signup">Signup</base-button>
+        </div>
+      </form>
+    </base-card>
+  </div>
 </template>
 
 <script>
@@ -155,9 +157,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
 .card {
   margin-top: 4rem;
-  padding: 0;
+  padding: 2em 2em 1em;
 
   display: flex;
   flex-direction: column;

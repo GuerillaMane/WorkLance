@@ -45,7 +45,7 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   padding: 1rem;
   margin: 2rem auto;
-  max-width: 40rem;
+  max-width: 60%;
 }
 
 .error-message {
@@ -56,6 +56,7 @@ body {
 .actions {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
 
   .button-base:not(:last-child) {
     margin-right: 0.5rem;
@@ -195,5 +196,13 @@ body {
   }
   0%, 100% {
     transform: translateX(0);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .card {
+    margin: 0;
+    box-shadow: none;
+    max-width: 100%;
   }
 }

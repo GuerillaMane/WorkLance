@@ -1,27 +1,21 @@
 <template>
-  <div>
-    <section>
-      <developer-filter @update-filter="updateFilters"></developer-filter>
-    </section>
+  <section>
+    <base-card>
+      <developer-filter
+        @update-filter="updateFilters" @refresh="loadDevs"
+        :is-loading="isLoading" :is-developer="isDeveloper"
+      ></developer-filter>
 
-    <section>
-      <base-card>
-        <div class="controls">
-          <base-button @click="loadDevs(true)">Refresh</base-button>
-          <base-button v-if="!isDeveloper && !this.isLoading" link :to="{name: 'Registration'}">
-            Register as a Dev
-          </base-button>
-        </div>
+      <base-spinner v-if="isLoading"></base-spinner>
 
-        <base-spinner v-if="isLoading"></base-spinner>
-        <ul v-else-if="isDevelopers">
-          <developer-item v-for="dev in filteredDevelopers" :key="dev.id"
-                          v-bind="dev"></developer-item>
-        </ul>
-        <h4 v-else>No devs found...</h4>
-      </base-card>
-    </section>
-  </div>
+      <div v-else-if="isDevelopers" class="container-grid">
+        <developer-item v-for="dev in filteredDevelopers" :key="dev.id"
+                        v-bind="dev"></developer-item>
+      </div>
+
+      <h4 v-else>No devs found...</h4>
+    </base-card>
+  </section>
 </template>
 
 <script>
@@ -83,19 +77,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 40%);
+  gap: 1.5em 3em;
+  justify-content: center;
+  padding-block: 2em;
 }
 
 h4 {
   text-align: center;
-  margin: 1rem;
+  padding: 4em;
 }
 
-.controls {
-  display: flex;
-  justify-content: space-between;
+@media screen and (max-width: 1023px) {
+  .container-grid {
+    display: grid;
+    justify-items: stretch;
+    grid-template-columns: 1fr;
+  }
 }
 </style>

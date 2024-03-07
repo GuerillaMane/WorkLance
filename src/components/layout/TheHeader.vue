@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <!--:style="[isLogin ? 'display: none' : '']"-->
-    <nav>
+    <nav class="nav">
       <div class="container-row">
         <img :src="require('../../../public/hard-work.png')" alt="WorkLance icon">
         <h2>
@@ -9,22 +9,32 @@
         </h2>
       </div>
 
-      <ul>
-        <li>
-          <router-link :to="{name: 'Developers'}">See the Developers</router-link>
-        </li>
-        <template v-if="isLogged">
+      <div class="nav-menu" :class="{'show-menu': isMobileMenuShown}">
+        <ul class="nav-list">
           <li>
-            <router-link :to="{name: 'Messages'}">Your Messages</router-link>
+            <router-link :to="{name: 'Developers'}">See the Developers</router-link>
           </li>
-          <li>
-            <logout-link></logout-link>
+          <template v-if="isLogged">
+            <li>
+              <router-link :to="{name: 'Messages'}">Your Messages</router-link>
+            </li>
+            <li>
+              <logout-link></logout-link>
+            </li>
+          </template>
+          <li v-else>
+            <router-link :to="{name: 'Login'}">Login</router-link>
           </li>
-        </template>
-        <li v-else>
-          <router-link :to="{name: 'Login'}">Login</router-link>
-        </li>
-      </ul>
+        </ul>
+
+        <div class="nav-close" v-if="isMobileMenuShown" @click="showMobileMenu">
+          <font-awesome-icon icon="times"></font-awesome-icon>
+        </div>
+      </div>
+
+      <div class="nav-toggle" @click="showMobileMenu">
+        <font-awesome-icon icon="bars"></font-awesome-icon>
+      </div>
     </nav>
   </header>
 </template>
@@ -37,9 +47,21 @@ export default {
 
   components: {LogoutLink},
 
+  data() {
+    return {
+      isMobileMenuShown: false,
+    };
+  },
+
   computed: {
     isLogged() {
       return !!this.$store.getters['getUserId'];
+    }
+  },
+
+  methods: {
+    showMobileMenu() {
+      this.isMobileMenuShown = !this.isMobileMenuShown;
     }
   }
 }
@@ -55,24 +77,28 @@ header {
   align-items: center;
   box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
 
-  nav {
+  .nav {
     width: 90%;
     margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
 
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    &-toggle, &-close {
+      display: none;
+    }
 
-    li {
-      margin: 0 0.5rem;
+    &-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      li {
+        margin: 0 0.5rem;
+      }
     }
   }
 
@@ -112,5 +138,44 @@ header {
   a:visited {
     color: black;
   }
+}
+
+@media screen and (max-width: 1023px){
+  .nav {
+    &-menu {
+      position: fixed;
+      top: -100%;
+      left: 0;
+      background-color: $base-bg;
+      box-shadow: 0 8px 16px hsla(230, 75%, 32%, .15);
+      width: 100%;
+      padding-block: 2.5rem 2rem;
+      transition: top .4s;
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      row-gap: 1em;
+      text-align: center;
+    }
+
+    &-toggle {
+      display: flex !important;
+      cursor: pointer;
+    }
+
+    &-close {
+      display: flex !important;
+      cursor: pointer;
+      position: absolute;
+      top: 1.5em;
+      right: 1.5em;
+    }
+  }
+}
+
+.show-menu{
+   top: 0;
 }
 </style>

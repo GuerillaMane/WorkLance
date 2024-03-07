@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <div class="card-item">
     <h3>{{ fullname }}</h3>
     <h4>${{ rate }}/hour</h4>
     <div>
@@ -11,7 +11,7 @@
       <base-button link styleType="flat" :to="{path: `/devs/${id}/contact`}">Contact</base-button>
       <base-button link :to="{path: `/devs/${id}`}">View</base-button>
     </div>
-  </li>
+  </div>
 </template>
 
 <script>
@@ -29,7 +29,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-li {
+.card-item {
+  display: flex;
+  flex-direction: column;
   margin: 1rem 0;
   border: 1px solid #424242;
   border-radius: 10px;
